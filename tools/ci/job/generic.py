@@ -69,3 +69,6 @@ class BaseJob:
 
     def install_prefix(self) -> str:
         return self.config["install_prefix"]
+
+    def path(self) -> str:
+        return self.config["path"]
