@@ -184,7 +184,11 @@ fn listen_connecting_socket(libos: &mut LibOS, local: &SocketAddr, remote: &Sock
         Ok(qr) if qr.qr_opcode == demi_opcode_t::DEMI_OPC_CONNECT && qr.qr_ret == 0 => {
             anyhow::bail!("connect() should not succeed because remote does not exist")
         },
-        Ok(_) => anyhow::bail!("wait() should not succeed"),
+        Ok(qr) => anyhow::bail!(
+            "wait() should not succeed, returned: qr_opcode={:?} qr_ret={:?}",
+            qr.qr_opcode,
+            qr.qr_ret
+        ),
         Err(_) => anyhow::bail!("wait() should timeout"),
     }
 
